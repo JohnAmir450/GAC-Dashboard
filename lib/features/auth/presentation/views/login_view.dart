@@ -5,10 +5,7 @@ import 'package:gac_dashboard/core/helper_functions/extentions.dart';
 import 'package:gac_dashboard/core/helper_functions/routes.dart';
 import 'package:gac_dashboard/core/services/get_it_service.dart';
 import 'package:gac_dashboard/core/utils/app_colors.dart';
-import 'package:gac_dashboard/core/utils/app_text_styles.dart';
-import 'package:gac_dashboard/core/utils/spacing.dart';
-import 'package:gac_dashboard/core/widgets/custom_button.dart';
-import 'package:gac_dashboard/core/widgets/custom_text_field.dart';
+import 'package:gac_dashboard/core/utils/custom_app_bar.dart';
 import 'package:gac_dashboard/features/auth/data/login_cubit/login_cubit.dart';
 import 'package:gac_dashboard/features/auth/domain/repos/auth_repo.dart';
 import 'package:gac_dashboard/features/auth/presentation/views/widgets/login_view_body.dart';
@@ -23,14 +20,7 @@ class LoginView extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginCubit(getIt.get<AuthRepo>()),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'تسجيل الدخول',
-            style: TextStyles.bold19,
-          ),
-          centerTitle: true,
-          leading: const SizedBox.shrink(),
-        ),
+        appBar: customAppBar(title: 'تسجيل الدخول'),
         body: BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccessState) {
@@ -53,4 +43,6 @@ class LoginView extends StatelessWidget {
       ),
     );
   }
+
+  
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gac_dashboard/core/helper_functions/routes.dart';
 import 'package:gac_dashboard/features/Auth/presentation/views/login_view.dart';
+import 'package:gac_dashboard/features/add_product/presentation/views/add_product_view.dart';
 import 'package:gac_dashboard/features/dashboard/presentation/views/dashboard_view.dart';
 
 Route onGenerateRoute(RouteSettings settings) {
@@ -9,8 +10,8 @@ Route onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const LoginView());
     case Routes.dashboardView:
       return MaterialPageRoute(builder: (_) => const DashboardView());
-// case Routes.addProductView:
-//       return MaterialPageRoute(builder: (_) => const AddProductView());
+    case Routes.addProductView:
+      return MaterialPageRoute(builder: (_) => const AddProductView());
     default:
       return MaterialPageRoute(
           builder: (_) => Scaffold(
