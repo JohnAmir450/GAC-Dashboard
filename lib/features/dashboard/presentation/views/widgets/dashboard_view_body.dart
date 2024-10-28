@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gac_dashboard/core/cubits/products_cubit/products_cubit.dart';
 import 'package:gac_dashboard/core/helper_functions/extentions.dart';
+import 'package:gac_dashboard/core/helper_functions/get_user_data.dart';
 import 'package:gac_dashboard/core/helper_functions/routes.dart';
 import 'package:gac_dashboard/core/utils/app_text_styles.dart';
 import 'package:gac_dashboard/core/utils/spacing.dart';
@@ -23,7 +24,16 @@ class DashboardViewBody extends StatelessWidget {
       child: CustomScrollView(physics: const BouncingScrollPhysics(), slivers: [
         SliverToBoxAdapter(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                'مرحبًا بك !',
+                style: TextStyles.regular16.copyWith(
+                  color: const Color(0xff949D9E),
+                ),
+                
+              ),
+              Text(getUserData().name!, style: TextStyles.bold16),
               Padding(
                 padding: const EdgeInsets.only(top: 30.0),
                 child: CustomButton(

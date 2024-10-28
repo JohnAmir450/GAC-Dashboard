@@ -19,3 +19,13 @@ final class LoginFailureState extends LoginState {
 
   LoginFailureState({required this.errMessage});
 }
+
+
+final class SendEmailToResetPasswordSuccessState extends LoginState {}
+
+
+final class SendEmailToResetPasswordFailureState extends LoginState {
+  final String errMessage;
+
+  SendEmailToResetPasswordFailureState({required this.errMessage});
+}

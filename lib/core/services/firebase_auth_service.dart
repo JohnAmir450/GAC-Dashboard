@@ -11,11 +11,19 @@ class FirebaseAuthService {
           .signInWithEmailAndPassword(email: email, password: password);
       return credential.user!;
     } on FirebaseAuthException catch (e) {
-       log('there was an Exception from Firebase Auth Service: ${e.toString()}');
+      log('there was an Exception from Firebase Auth Service: ${e.toString()}');
       throw CustomException(message: mapException(e));
-      
     } catch (e) {
       log('there was an Exception from Firebase Auth Service: ${e.toString()}');
+      throw CustomException(message: 'حدث خطأ ما، حاول مرة اخرى');
+    }
+  }
+
+  Future<void> sendEmailToResetPassword({required String email}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      log('there was an Exception from sendEmailToResetPassword: ${e.toString()}');
       throw CustomException(message: 'حدث خطأ ما، حاول مرة اخرى');
     }
   }

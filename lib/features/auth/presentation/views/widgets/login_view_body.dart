@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gac_dashboard/core/helper_functions/extentions.dart';
+import 'package:gac_dashboard/core/helper_functions/routes.dart';
 import 'package:gac_dashboard/core/utils/spacing.dart';
 import 'package:gac_dashboard/core/widgets/custom_button.dart';
 import 'package:gac_dashboard/core/widgets/custom_text_field.dart';
@@ -48,7 +50,17 @@ class LoginViewBody extends StatelessWidget {
                   );
                 },
               ),
-              verticalSpace(60),
+              verticalSpace(10),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: TextButton(
+                  onPressed: () {
+                    context.pushNamed(Routes.resetPasswordView);
+                  },
+                  child: const Text('نسيت كلمة المرور ؟'),
+                ),
+              ),
+              verticalSpace(10),
               CustomButton(
                   text: 'تسجيل الدخول',
                   onPressed: () {

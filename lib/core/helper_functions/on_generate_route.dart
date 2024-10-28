@@ -7,6 +7,7 @@ import 'package:gac_dashboard/core/services/get_it_service.dart';
 import 'package:gac_dashboard/features/Auth/presentation/views/login_view.dart';
 import 'package:gac_dashboard/features/add_product/domain/entities/product_entity.dart';
 import 'package:gac_dashboard/features/add_product/presentation/views/add_product_view.dart';
+import 'package:gac_dashboard/features/auth/presentation/views/widgets/reset_password_view.dart';
 import 'package:gac_dashboard/features/dashboard/presentation/views/dashboard_view.dart';
 import 'package:gac_dashboard/features/dashboard/presentation/views/update_product_view.dart';
 
@@ -14,6 +15,8 @@ Route onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
     case Routes.loginView:
       return MaterialPageRoute(builder: (_) => const LoginView());
+      case Routes.resetPasswordView:
+      return MaterialPageRoute(builder: (_) => const ResetPasswordView());
     case Routes.dashboardView:
       return MaterialPageRoute(builder: (_) => const DashboardView());
     case Routes.addProductView:

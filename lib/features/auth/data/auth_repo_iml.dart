@@ -13,36 +13,49 @@ import 'package:gac_dashboard/features/auth/domain/repos/auth_repo.dart';
 
 import '../../../core/services/database_service.dart';
 
-class AuthRepoImpl extends AuthRepo{
+class AuthRepoImpl extends AuthRepo {
   final FirebaseAuthService firebaseAuthService;
-   final DatabaseService databaseService;
+  final DatabaseService databaseService;
 
-  AuthRepoImpl({required this.firebaseAuthService,required this.databaseService});
+  AuthRepoImpl(
+      {required this.firebaseAuthService, required this.databaseService});
   @override
-  Future<Either<Failure, UserEntity>> signInWithEmailAndPassword({required String email, required String password})async {
+  Future<Either<Failure, UserEntity>> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
     try {
-  var user =await firebaseAuthService.signInWithEmailAndPassword(email: email, password: password);
-  var userEntity=await getUserData(uId: user.uid);
-  await saveUserData(user: userEntity);
-  return Right(userEntity);
-} on CustomException catch (e) {
-  return Left(ServerFailure(message: e.message));
-} catch (e) { 
-  return Left(ServerFailure(message: 'حدث خطأ ما، حاول مرة اخرى'));
+      var user = await firebaseAuthService.signInWithEmailAndPassword(
+          email: email, password: password);
+      var userEntity = await getUserData(uId: user.uid);
+      await saveUserData(user: userEntity);
+      return Right(userEntity);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    } catch (e) {
+      return Left(ServerFailure(message: 'حدث خطأ ما، حاول مرة اخرى'));
+    }
   }
-  }
-  
+
   @override
   Future<UserEntity> getUserData({required String uId}) async {
-    var userData= await databaseService.getData(path: BackendEndpoints.getUserData,documentId: uId);
+    var userData = await databaseService.getData(
+        path: BackendEndpoints.getUserData, documentId: uId);
     return UserModel.fromJson(userData);
   }
 
-  
   @override
-  Future saveUserData({required UserEntity user})async {
-   var userData=jsonEncode(user.toMap());
-   await CacheHelper.saveData(key: kSaveUserDataKey, value: userData);
+  Future saveUserData({required UserEntity user}) async {
+    var userData = jsonEncode(user.toMap());
+    await CacheHelper.saveData(key: kSaveUserDataKey, value: userData);
   }
-  
+
+  @override
+  Future<Either<Failure, void>> sendPasswordResetEmail(
+      {required String email}) async {
+    try {
+      await firebaseAuthService.sendEmailToResetPassword(email: email);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    }
   }
+}

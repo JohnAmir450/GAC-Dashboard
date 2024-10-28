@@ -12,8 +12,11 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.authRepo) : super(LoginInitialState());
 
 final TextEditingController emailController = TextEditingController();
+
+final TextEditingController emailToResetPasswordController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
 final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+final GlobalKey<FormState> resetPasswordFormKey = GlobalKey<FormState>();
 Icon suffixIcon = const Icon(Icons.visibility);
   bool isObscured = true;
 
@@ -32,6 +35,15 @@ Icon suffixIcon = const Icon(Icons.visibility);
       emit(LoginFailureState(errMessage: failure.message));
     }, (user) {
       emit(LoginSuccessState(userEntity: user));
+    });
+  }
+
+  Future<void> sendEmailToResetPassword()async{
+    var result = await authRepo.sendPasswordResetEmail(email: emailToResetPasswordController.text);
+    result.fold((failure) {
+      emit(SendEmailToResetPasswordFailureState(errMessage: failure.message));
+    }, (success) {
+      emit(SendEmailToResetPasswordSuccessState());
     });
   }
 
