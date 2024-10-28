@@ -1,10 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gac_dashboard/core/helper_functions/extentions.dart';
 import 'package:gac_dashboard/core/helper_functions/routes.dart';
 import 'package:gac_dashboard/core/utils/app_colors.dart';
 import 'package:gac_dashboard/core/utils/app_text_styles.dart';
 import 'package:gac_dashboard/core/utils/spacing.dart';
 import 'package:gac_dashboard/features/add_product/domain/entities/product_entity.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class VisibleProductsItem extends StatelessWidget {
   const VisibleProductsItem({
@@ -26,11 +29,15 @@ class VisibleProductsItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              SizedBox(
+              ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: CachedNetworkImage(
                   width: MediaQuery.sizeOf(context).width * 0.4,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.network(productEntity.imageUrl!))),
+                  imageUrl: productEntity.imageUrl! ,
+                  placeholder: (context, url) => LoadingAnimationWidget.threeRotatingDots(color: AppColors.lightSecondaryColor, size: 23),
+                  errorWidget: (context, url, error) => const Icon(Icons.error_outline, color: Colors.amber),
+                ),
+              ),
                     horizontalSpace(8),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width * 0.4,

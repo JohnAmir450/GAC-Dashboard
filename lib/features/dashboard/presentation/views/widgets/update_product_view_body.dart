@@ -1,14 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gac_dashboard/core/cubits/product_updates/product_updates_cubit.dart';
 import 'package:gac_dashboard/core/helper_functions/custom_snak_bar.dart';
 import 'package:gac_dashboard/core/helper_functions/extentions.dart';
+import 'package:gac_dashboard/core/utils/app_colors.dart';
 import 'package:gac_dashboard/core/utils/spacing.dart';
 import 'package:gac_dashboard/core/widgets/custom_button.dart';
 import 'package:gac_dashboard/core/widgets/custom_text_field.dart';
 import 'package:gac_dashboard/features/add_product/domain/entities/product_entity.dart';
 import 'package:gac_dashboard/features/add_product/presentation/views/widgets/is_featured_check_box.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class UpdateProductViewBody extends StatefulWidget {
   final ProductEntity product;
@@ -44,10 +47,12 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: Image.network(
-                  widget.product.imageUrl!,
+                child: CachedNetworkImage(
                   height: MediaQuery.sizeOf(context).height * 0.3,
-                )),
+                  imageUrl: widget.product.imageUrl! ,
+                  placeholder: (context, url) => LoadingAnimationWidget.threeRotatingDots(color: AppColors.lightSecondaryColor, size: 23),
+                  errorWidget: (context, url, error) => const Icon(Icons.error_outline, color: Colors.amber),
+                ),),
             verticalSpace(24),
             updateProductTextFields(cubit),
             verticalSpace(16),
