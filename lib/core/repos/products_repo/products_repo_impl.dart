@@ -1,23 +1,84 @@
 import 'package:dartz/dartz.dart';
+import 'package:gac_dashboard/core/errors/custom_exceptions.dart';
 import 'package:gac_dashboard/core/repos/products_repo/products_repo.dart';
 import 'package:gac_dashboard/core/services/database_service.dart';
 import 'package:gac_dashboard/core/utils/backend_endpoints.dart';
-import 'package:gac_dashboard/features/add_product/domain/entities/add_product_entity.dart';
+import 'package:gac_dashboard/features/add_product/domain/entities/product_entity.dart';
 
-import '../../../features/add_product/data/models/add_product_model.dart';
+import '../../../features/add_product/data/models/product_model.dart';
 import '../../errors/failures.dart';
 
 class ProductRepoImpl extends ProductsRepo {
   final DatabaseService databaseService;
   ProductRepoImpl({required this.databaseService});
+
+ 
   @override
-   Future<Either<Failure,void>> addProduct({required AddProductEntity addProductEntity}) async{
+   Future<Either<Failure,void>> addProduct({required ProductEntity addProductEntity}) async{
     try {
-  await databaseService.addData(path: BackendEndpoints.products, data: AddProductModel.fromEntity(addProductEntity).toJson());
+  await databaseService.addData(path: BackendEndpoints.products, data: ProductModel.fromEntity(addProductEntity).toJson(), );
   return right(null);
 }  catch (e) {
   return left(ServerFailure(message: 'حدث خطاء اثناء اضافة المنتج'));
 }
   }
+
+  @override 
+   Either<Failure, Stream<List<ProductEntity>>> getProductsStream({Map<String, dynamic>? query}) {
+    try {
+      final stream = databaseService.getDataStream(path: BackendEndpoints.products,query: query ).map((data) {
+         
+        return data.map((e) => ProductModel.fromJson(e).toEntity()).toList();
+      });
+      return Right(stream);
+    } catch (e) {
+      return Left(ServerFailure(message: 'فشل في تحميل المنتجات، حاول مرة اخرى!'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure,void>> updateProduct({required String documentId ,required ProductEntity productEntity})async {
+    try {
+  await databaseService.updateProduct(path: BackendEndpoints.products, documentId: documentId, 
+
+  data:ProductModel.fromEntity(productEntity).toJson() 
+  );
+  return right(null);
+} on CustomException catch (e) {
+  return left(ServerFailure(message: e.message));
+}
+  }
+
+  @override
+  Future<Either<Failure, String>> getProductIdByField({
+  required String field,
+  required dynamic value,
+}) async {
+  try {
+    final  documentIds = await databaseService.getDocumentIdsByField(
+      path: BackendEndpoints.products,
+      field: field,
+      value: value,
+    );
+    if (documentIds.isNotEmpty) {
+      return Right(documentIds.first); // Assuming you want the first match
+    } else {
+      return Left(ServerFailure(message: 'No product found with the specified field.'));
+    }
+  } catch (e) {
+    return Left(ServerFailure(message: 'Error retrieving product ID: ${e.toString()}'));
+  }
+}
+
+  @override
+  Future<Either<Failure, void>> deleteProduct({required String documentId})async {
+    try {
+  await databaseService.deleteProduct(path: BackendEndpoints.products, documentId: documentId);
+  return right(null);
+} on CustomException catch (e) {
+  return left(ServerFailure(message: e.message));
+}
+  }
+
   
 }

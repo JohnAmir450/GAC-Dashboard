@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:gac_dashboard/features/add_product/domain/entities/review_entity.dart';
 
-class AddProductEntity {
+class ProductEntity {
+ 
   final String name;
   final num price;
   final String description;
@@ -17,7 +18,7 @@ class AddProductEntity {
    num ratingCount=0;
   final List<ReviewEntity>reviews;
 
-  AddProductEntity({
+  ProductEntity({
     required this.numberOfCalories,
     required this.expirationMonths,
     required this.isOrganic,
@@ -30,5 +31,6 @@ class AddProductEntity {
     required this.isFeatured,
     this.imageUrl,
     required this.reviews,
+  
   });
 }

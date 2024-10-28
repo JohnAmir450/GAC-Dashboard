@@ -3,6 +3,7 @@ import 'package:gac_dashboard/core/utils/app_text_styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
+  final String? labelText;
   final TextInputType? textInputType;
   final Widget? suffixIcon;
   final int? maxLines;
@@ -14,6 +15,7 @@ class CustomTextFormField extends StatelessWidget {
       required this.hintText,
       this.textInputType,
       this.suffixIcon,
+      this.labelText,
       this.onChanged,
       this.controller,
       this.isObscured,
@@ -34,6 +36,7 @@ class CustomTextFormField extends StatelessWidget {
       },
       keyboardType: textInputType ?? TextInputType.emailAddress,
       decoration: InputDecoration(
+        labelText: labelText,labelStyle: TextStyles.bold16.copyWith(color: const Color(0xff949D9E)),
         suffixIcon: suffixIcon,
         suffixIconColor: const Color(0xff949D9E),
         hintText: hintText,

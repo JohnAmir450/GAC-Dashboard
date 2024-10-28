@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gac_dashboard/core/helper_functions/custom_snak_bar.dart';
 import 'package:gac_dashboard/core/utils/spacing.dart';
 import 'package:gac_dashboard/core/widgets/custom_button.dart';
-import 'package:gac_dashboard/features/add_product/domain/entities/add_product_entity.dart';
+import 'package:gac_dashboard/features/add_product/domain/entities/product_entity.dart';
 import 'package:gac_dashboard/features/add_product/presentation/manager/add_product/add_product_cubit.dart';
 import 'package:gac_dashboard/features/add_product/presentation/views/widgets/add_product_text_fields.dart';
 import 'package:gac_dashboard/features/add_product/presentation/views/widgets/image_field.dart';
@@ -44,7 +44,7 @@ class AddProductViewBody extends StatelessWidget {
                   onPressed: () {
                     if (cubit.productImage != null) {
                       if (cubit.formKey.currentState!.validate()) {
-                        AddProductEntity input = productData(cubit);
+                        ProductEntity input = productData(cubit);
                         cubit.addProduct(
                             addProductEntity:input );
                       }
@@ -59,8 +59,8 @@ class AddProductViewBody extends StatelessWidget {
     );
   }
 
-  AddProductEntity productData(AddProductCubit cubit) {
-    AddProductEntity input=AddProductEntity(
+  ProductEntity productData(AddProductCubit cubit) {
+    ProductEntity input=ProductEntity(
             fileImage: cubit.productImage,
             numberOfCalories:
                 cubit.numberOfCalories?.toInt() ?? 0,

@@ -1,23 +1,66 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gac_dashboard/core/cubits/products_cubit/products_cubit.dart';
 import 'package:gac_dashboard/core/helper_functions/extentions.dart';
 import 'package:gac_dashboard/core/helper_functions/routes.dart';
+import 'package:gac_dashboard/core/utils/app_text_styles.dart';
+import 'package:gac_dashboard/core/utils/spacing.dart';
 import 'package:gac_dashboard/core/widgets/custom_button.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+import '../../../../../core/utils/app_colors.dart';
+import 'visible_products_list_view.dart';
 
 class DashboardViewBody extends StatelessWidget {
-  const DashboardViewBody ({super.key});
+  const DashboardViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 16.w,vertical: 30.h),
-      child: Column(
-        children: [
-          CustomButton(text: 'اضافة منتج',onPressed: (){
-            context.pushNamed(Routes.addProductView);
-          }),
-        ],
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: CustomScrollView(physics: const BouncingScrollPhysics(), slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: CustomButton(
+                    text: ' اضافة منتج',
+                    onPressed: () {
+                      context.pushNamed(Routes.addProductView);
+                    }),
+              ),
+              verticalSpace(16),
+              const Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    'المنتجات المعروضة ',
+                    style: TextStyles.bold19,
+                  )),
+              verticalSpace(16),
+            ],
+          ),
+        ),
+        BlocBuilder<ProductsCubit, ProductsState>(
+          builder: (context, state) {
+            if(state is ProductsLoadingState){
+              return SliverToBoxAdapter(
+                child: Center(child: LoadingAnimationWidget.inkDrop(color: AppColors.primaryColor, size: 32),),
+              );
+            }else if (state is ProductsSuccessState) {
+            return  VisibleProductsListView(products: state.products,);
+          } else if (state is ProductsFailureState) {
+            return SliverToBoxAdapter(
+              child: Center(child: Text(state.errorMessage)),
+            );
+          } else {
+            return const SliverToBoxAdapter(child: Center(child: Text('لا يوجد اي منتاجات معروضة حتى الان')));
+          }
+          },
+        ),
+      ]),
     );
   }
 }

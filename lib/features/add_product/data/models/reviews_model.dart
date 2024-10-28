@@ -31,7 +31,7 @@ final class ReviewModel {
         reviewDescription: entity.reviewDescription);
   }
 
-  toJson  () {
+  toJson() {
     return {
       'name': name,
       'image': image,
@@ -39,5 +39,15 @@ final class ReviewModel {
       'date': date,
       'reviewDescription': reviewDescription,
     };
+  }
+
+  ReviewEntity toEntity() {
+    return ReviewEntity(
+      name: name,
+      image: image,
+      ratting: ratting,
+      date: date,
+      reviewDescription: reviewDescription,
+    );
   }
 }

@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:gac_dashboard/features/add_product/data/models/reviews_model.dart';
-import 'package:gac_dashboard/features/add_product/domain/entities/add_product_entity.dart';
+import 'package:gac_dashboard/features/add_product/domain/entities/product_entity.dart';
 
-class AddProductModel {
+class ProductModel {
   final String name;
   final num price;
   final String description;
@@ -17,8 +17,9 @@ class AddProductModel {
    num avgRating=0;
    num ratingCount=0;
   final List<ReviewModel>reviews;
+  final int? sellingCount;
 
-  AddProductModel({
+  ProductModel({
     required this.numberOfCalories,
     required this.expirationMonths,
     required this.isOrganic,
@@ -31,10 +32,11 @@ class AddProductModel {
     required this.isFeatured,
     this.imageUrl,
     required this.reviews,
+    this.sellingCount=0
   });
 
-  factory AddProductModel.fromEntity( AddProductEntity addProductEntity) {
-    return AddProductModel(
+  factory ProductModel.fromEntity( ProductEntity addProductEntity) {
+    return ProductModel(
       name: addProductEntity.name,    
       price: addProductEntity.price,
       description: addProductEntity.description,
@@ -49,7 +51,25 @@ class AddProductModel {
       reviews: addProductEntity.reviews.map((e) => ReviewModel.fromEntity(e)).toList(),
     );
   } 
-
+  factory ProductModel.fromJson(Map<String,dynamic> json){
+    return ProductModel(
+      name: json['name'],
+      price: json['price'],
+      description: json['description'],
+      code: json['code'],
+      fileImage: File(json['fileImage']),
+      isFeatured: json['isFeatured'],
+      imageUrl: json['imageUrl'],
+      expirationMonths: json['expirationMonths'],
+      isOrganic: json['isOrganic'],
+      productQuantity: json['productQuantity'],
+      numberOfCalories: json['numberOfCalories'],
+      reviews: (json['reviews'] as List<dynamic>?)
+        ?.map((review) => ReviewModel.fromJson(review as Map<String, dynamic>))
+        .toList() ?? [],
+      sellingCount: json['sellingCount'],
+    );
+  }
   toJson(){
     return {
       'name': name,
@@ -64,6 +84,24 @@ class AddProductModel {
       'productQuantity': productQuantity,
       'numberOfCalories': numberOfCalories,
       'reviews': reviews.map((e) => e.toJson()).toList(),
+      'sellingCount':sellingCount
     };
+  }
+
+  ProductEntity toEntity(){
+    return ProductEntity(
+      name: name,    
+      price: price,
+      description: description,
+      code: code,
+      fileImage: fileImage,  
+      isFeatured: isFeatured,
+      imageUrl: imageUrl,      
+      expirationMonths: expirationMonths,
+      isOrganic: isOrganic,
+      productQuantity: productQuantity,
+      numberOfCalories: numberOfCalories,
+      reviews: reviews.map((e) => e.toEntity()).toList(),
+    );
   }
 }
