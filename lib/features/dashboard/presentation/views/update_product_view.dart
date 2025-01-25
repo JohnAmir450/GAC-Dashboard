@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gac_dashboard/core/cubits/product_updates/product_updates_cubit.dart';
 import 'package:gac_dashboard/core/helper_functions/custom_snak_bar.dart';
+import 'package:gac_dashboard/core/helper_functions/extentions.dart';
 import 'package:gac_dashboard/core/utils/custom_app_bar.dart';
 import 'package:gac_dashboard/features/add_product/domain/entities/product_entity.dart';
 import 'package:gac_dashboard/features/dashboard/presentation/views/widgets/update_product_view_body.dart';
@@ -12,7 +13,7 @@ class UpdateProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: 'تعديل بيانات المنتج'),
+      appBar: customAppBar(title: 'تعديل بيانات المنتج',leading: IconButton(onPressed: (){context.pop();}, icon: const Icon(Icons.arrow_back_ios)),),
       body: BlocConsumer<ProductUpdatesCubit, ProductUpdatesState>(
         listener: (context, state) {
          {

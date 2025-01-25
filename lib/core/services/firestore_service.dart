@@ -30,31 +30,55 @@ class FireStoreService extends DatabaseService {
     return false;
   }
 
-  @override
-  Future getData(
-      {required String path,
-      String? documentId,
-      Map<String, dynamic>? query}) async {
+   @override
+Future<dynamic> getData({
+  required String path,
+  String? documentId,
+  Map<String, dynamic>? query,
+  String? filterValueEqualTo,
+  String? filterValue, // Add this optional parameter for user-specific queries
+}) async {
+  try {
+    // If documentId is provided, fetch the document by its ID
     if (documentId != null) {
       var data = await fireStore.collection(path).doc(documentId).get();
       return data.data();
     } else {
+      // Query the collection
       Query<Map<String, dynamic>> data = fireStore.collection(path);
+
+      // If userId is provided, filter the query by userId (only for orders)
+      if (filterValueEqualTo != null &&filterValue != null) {
+        data = data.where(filterValue, isEqualTo: filterValueEqualTo);
+      }
+
+      // Apply additional query filters if provided
       if (query != null) {
         if (query['orderBy'] != null) {
           var orderByField = query['orderBy'];
-          var descendingField = query['descending'];
-          data = data.orderBy(orderByField, descending: descendingField);
+          var descending = query['descending']??false;
+           
+          data = data.orderBy(orderByField, descending: descending);
         }
         if (query['limit'] != null) {
-          var limitField = query['limit'];
-          data = data.limit(limitField);
+          var limit = query['limit'];
+          data = data.limit(limit);
+        }
+        if (query['where'] != null && query['isEqualTo'] != null) {
+          data = data.where(query['where'], isEqualTo: query['isEqualTo']);
         }
       }
+
+      // Fetch the data from Firestore
       var result = await data.get();
+
+      // Return the fetched data
       return result.docs.map((e) => e.data()).toList();
     }
+  } catch (e) {
+    throw CustomException(message: 'Failed to fetch data: ${e.toString()}');
   }
+}
  
   
    @override

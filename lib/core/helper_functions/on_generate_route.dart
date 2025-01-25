@@ -9,6 +9,7 @@ import 'package:gac_dashboard/features/add_product/domain/entities/product_entit
 import 'package:gac_dashboard/features/add_product/presentation/views/add_product_view.dart';
 import 'package:gac_dashboard/features/auth/presentation/views/widgets/reset_password_view.dart';
 import 'package:gac_dashboard/features/dashboard/presentation/views/dashboard_view.dart';
+import 'package:gac_dashboard/features/orders/presentation/views/orders_view.dart';
 import 'package:gac_dashboard/features/dashboard/presentation/views/update_product_view.dart';
 
 Route onGenerateRoute(RouteSettings settings) {
@@ -21,6 +22,8 @@ Route onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const DashboardView());
     case Routes.addProductView:
       return MaterialPageRoute(builder: (_) => const AddProductView());
+      case Routes.ordersView:
+      return MaterialPageRoute(builder: (_) => const OrdersView());
     case Routes.updateProductView:
       var productEntity = settings.arguments as ProductEntity;
       return MaterialPageRoute(

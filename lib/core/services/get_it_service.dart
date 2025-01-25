@@ -9,6 +9,8 @@ import 'package:gac_dashboard/core/services/firestore_service.dart';
 import 'package:gac_dashboard/core/services/storage_service.dart';
 import 'package:gac_dashboard/features/auth/data/auth_repo_iml.dart';
 import 'package:gac_dashboard/features/auth/domain/repos/auth_repo.dart';
+import 'package:gac_dashboard/features/orders/domain/repos/orders_repo.dart';
+import 'package:gac_dashboard/features/orders/presentation/views/data/repos/orders_repo_implmentaion.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -30,5 +32,9 @@ getIt.registerSingleton<StorageService>(FireStorageService());
   
    getIt.registerSingleton<ImagesRepo>(ImagesRepoImpl(
     storageService: getIt<StorageService>(),
+  ));
+
+   getIt.registerSingleton<OrdersRepo>(OrdersRepoImpl(
+    databaseService: getIt<DatabaseService>(),
   ));
 }

@@ -52,6 +52,7 @@ class AuthRepoImpl extends AuthRepo {
   Future<Either<Failure, void>> sendPasswordResetEmail(
       {required String email}) async {
     try {
+      
       await firebaseAuthService.sendEmailToResetPassword(email: email);
       return right(null);
     } on CustomException catch (e) {

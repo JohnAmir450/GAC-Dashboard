@@ -16,7 +16,7 @@ class ProductRepoImpl extends ProductsRepo {
   @override
    Future<Either<Failure,void>> addProduct({required ProductEntity addProductEntity}) async{
     try {
-  await databaseService.addData(path: BackendEndpoints.products, data: ProductModel.fromEntity(addProductEntity).toJson(), );
+  await databaseService.addData(path: BackendEndpoints.products, data: ProductModel.fromEntity(addProductEntity).toJson(), documentId: addProductEntity.code);
   return right(null);
 }  catch (e) {
   return left(ServerFailure(message: 'حدث خطاء اثناء اضافة المنتج'));
