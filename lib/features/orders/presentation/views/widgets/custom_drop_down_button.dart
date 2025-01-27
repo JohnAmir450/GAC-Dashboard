@@ -58,7 +58,6 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
       onChanged: (value) {
         if (value != null) {
           if (value == 'تم الإلغاء' || value == 'تم الاستلام') {
-           
             customQuickAlertView(
               context,
               title: 'هل انت متأكد من حالة هذا الطلب ؟ : $value',
@@ -69,7 +68,6 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
                 showSnackBar(context, text: 'تم تنفيذ العملية بنجاح');
                 Navigator.pop(context); // Close the dialog
 
-                
                 updateOrderStatus(context, value);
                 if (value == 'تم الإلغاء') {
                   context.read<OrdersCubit>().updateProductQuantityIfCancelled(
@@ -84,7 +82,6 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
               },
             );
           } else {
-            
             updateOrderStatus(context, value);
           }
         }
@@ -111,4 +108,3 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
     );
   }
 }
-

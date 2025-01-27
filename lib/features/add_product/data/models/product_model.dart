@@ -18,10 +18,12 @@ class ProductModel {
    num ratingCount=0;
   final List<ReviewModel>reviews;
   final int? sellingCount;
+  final String? category;
 
   ProductModel({
     required this.numberOfCalories,
     required this.expirationMonths,
+    required this.category,
     required this.isOrganic,
     required this.productQuantity,
     required this.name,
@@ -37,6 +39,7 @@ class ProductModel {
 
   factory ProductModel.fromEntity( ProductEntity addProductEntity) {
     return ProductModel(
+      category: addProductEntity.category,
       name: addProductEntity.name,    
       price: addProductEntity.price,
       description: addProductEntity.description,
@@ -56,6 +59,7 @@ class ProductModel {
       name: json['name'],
       price: json['price'],
       description: json['description'],
+      category: json['category'],
       code: json['code'],
       fileImage: File(json['fileImage']),
       isFeatured: json['isFeatured'],
@@ -74,6 +78,7 @@ class ProductModel {
     return {
       'name': name,
       'price': price,
+      'category': category,
       'description': description,
       'code': code,
       'fileImage': fileImage!.path,
@@ -92,6 +97,7 @@ class ProductModel {
     return ProductEntity(
       name: name,    
       price: price,
+      category: category,
       description: description,
       code: code,
       fileImage: fileImage,  

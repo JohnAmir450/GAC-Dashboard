@@ -17,6 +17,7 @@ class ProductEntity {
    num avgRating=0;
    num ratingCount=0;
   final List<ReviewEntity>reviews;
+  final String? category;
 
   ProductEntity({
     required this.numberOfCalories,
@@ -31,6 +32,6 @@ class ProductEntity {
     required this.isFeatured,
     this.imageUrl,
     required this.reviews,
-  
+    required this.category
   });
 }

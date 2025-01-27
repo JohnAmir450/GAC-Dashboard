@@ -39,14 +39,14 @@ class AddProductViewBody extends StatelessWidget {
                 cubit.isOrganic = value;
               }),
               verticalSpace(30),
+             
               CustomButton(
                   text: 'اضافة المنتج',
                   onPressed: () {
                     if (cubit.productImage != null) {
                       if (cubit.formKey.currentState!.validate()) {
                         ProductEntity input = productData(cubit);
-                        cubit.addProduct(
-                            addProductEntity:input );
+                        cubit.addProduct(addProductEntity: input);
                       }
                     } else {
                       showSnackBar(context, text: 'يجب اضافة صورة للمنتج');
@@ -60,23 +60,19 @@ class AddProductViewBody extends StatelessWidget {
   }
 
   ProductEntity productData(AddProductCubit cubit) {
-    ProductEntity input=ProductEntity(
-            fileImage: cubit.productImage,
-            numberOfCalories:
-                cubit.numberOfCalories?.toInt() ?? 0,
-            expirationMonths:
-                cubit.expirationMonths?.toInt() ?? 12,
-            isOrganic: cubit.isOrganic,
-            productQuantity:
-                cubit.productQuantity?.toInt() ?? 0,
-            name: cubit.productName.text,
-            price: cubit.productPrice?.toInt() ?? 0,
-            description: cubit.productDescription.text,
-            code: cubit.productCode.text,
-            isFeatured: cubit.isFeatured,
-            reviews: []
-            );
+    ProductEntity input = ProductEntity(
+        fileImage: cubit.productImage,
+        numberOfCalories: cubit.numberOfCalories?.toInt() ?? 0,
+        expirationMonths: cubit.expirationMonths?.toInt() ?? 12,
+        isOrganic: cubit.isOrganic,
+        productQuantity: cubit.productQuantity?.toInt() ?? 0,
+        name: cubit.productName.text,
+        price: cubit.productPrice?.toInt() ?? 0,
+        description: cubit.productDescription.text,
+        code: cubit.productCode.text,
+        isFeatured: cubit.isFeatured,
+        category: cubit.selectedCategory ?? 'الفئة',
+        reviews: []);
     return input;
   }
 }
-

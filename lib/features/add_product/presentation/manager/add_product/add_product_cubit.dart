@@ -11,39 +11,45 @@ part 'add_product_state.dart';
 
 class AddProductCubit extends Cubit<AddProductState> {
   final ImagesRepo imagesRepo;
-  final ProductsRepo  productsRepo;
-  
-  AddProductCubit(this.imagesRepo, this.productsRepo) : super(AddProductInitialState());
+  final ProductsRepo productsRepo;
+  List<String> categories = [
+    'شيف',
+    'تبارك',
+    'ماليزي',
+    'شروق',
+    'سماسم',
+    'الدوار',
+  ]; // Example category list
+  String? selectedCategory;
 
-final TextEditingController productName=TextEditingController();
-final TextEditingController productCode=TextEditingController();
-final TextEditingController productDescription=TextEditingController();
-num? productPrice,expirationMonths,productQuantity,numberOfCalories;
-var formKey= GlobalKey<FormState>();
-bool isFeatured = false;
-bool isOrganic= true;
-File? productImage;
+  AddProductCubit(this.imagesRepo, this.productsRepo)
+      : super(AddProductInitialState());
 
+  final TextEditingController productName = TextEditingController();
+  final TextEditingController productCode = TextEditingController();
+  final TextEditingController productDescription = TextEditingController();
+  num? productPrice, expirationMonths, productQuantity, numberOfCalories;
+  var formKey = GlobalKey<FormState>();
+  bool isFeatured = false;
+  bool isOrganic = true;
+  File? productImage;
 
+  Future<void> addProduct({required ProductEntity addProductEntity}) async {
+    emit(AddProductLoadingState());
+    final result =
+        await imagesRepo.uploadImage(image: addProductEntity.fileImage!);
 
-
-Future<void> addProduct({required ProductEntity addProductEntity})async{
-  emit(AddProductLoadingState());
-  final result=await imagesRepo.uploadImage(image: addProductEntity.fileImage!);
-
-  result.fold((failure) {
-    emit(AddProductFailureState(errorMessage: failure.message));
-  }, (imageUrl) async{
-    addProductEntity.imageUrl=imageUrl;
-    final result=await productsRepo.addProduct(addProductEntity: addProductEntity);
     result.fold((failure) {
       emit(AddProductFailureState(errorMessage: failure.message));
-    }, (success) {
-      emit(AddProductSuccessState());
+    }, (imageUrl) async {
+      addProductEntity.imageUrl = imageUrl;
+      final result =
+          await productsRepo.addProduct(addProductEntity: addProductEntity);
+      result.fold((failure) {
+        emit(AddProductFailureState(errorMessage: failure.message));
+      }, (success) {
+        emit(AddProductSuccessState());
+      });
     });
-  });
-  
-  
-}
-
+  }
 }

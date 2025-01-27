@@ -10,8 +10,6 @@ Either<Failure, Stream<List<ProductEntity>>> getProductsStream({Map<String, dyna
 Future<Either<Failure,void>> updateProduct({required String documentId, required ProductEntity productEntity});
 
 Future<Either<Failure,void>> deleteProduct({required String documentId});
-  Future<Either<Failure, String>> getProductIdByField({
-  required String field,
-  required dynamic value,
-});
+
+Future<Either<Failure,String>> getProduct({required String code}); 
 }

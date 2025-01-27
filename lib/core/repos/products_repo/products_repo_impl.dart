@@ -49,26 +49,6 @@ class ProductRepoImpl extends ProductsRepo {
 }
   }
 
-  @override
-  Future<Either<Failure, String>> getProductIdByField({
-  required String field,
-  required dynamic value,
-}) async {
-  try {
-    final  documentIds = await databaseService.getDocumentIdsByField(
-      path: BackendEndpoints.products,
-      field: field,
-      value: value,
-    );
-    if (documentIds.isNotEmpty) {
-      return Right(documentIds.first); // Assuming you want the first match
-    } else {
-      return Left(ServerFailure(message: 'No product found with the specified field.'));
-    }
-  } catch (e) {
-    return Left(ServerFailure(message: 'Error retrieving product ID: ${e.toString()}'));
-  }
-}
 
   @override
   Future<Either<Failure, void>> deleteProduct({required String documentId})async {
@@ -79,6 +59,18 @@ class ProductRepoImpl extends ProductsRepo {
   return left(ServerFailure(message: e.message));
 }
   }
+  
+  @override
+  Future<Either<Failure, String>> getProduct({required String code}) async{
+    try{
+      final product =await databaseService.getData(path: 'products', documentId: code);
+    
+      return Right(ProductModel.fromJson(product).toEntity().code);
+    }catch(e){
+      return Left(ServerFailure(message: e.toString()));
+  }
 
   
 }
+}
+
