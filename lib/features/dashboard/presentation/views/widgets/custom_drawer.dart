@@ -1,14 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gac_dashboard/core/cubits/products_cubit/products_cubit.dart';
+import 'package:gac_dashboard/core/helper_functions/cusom_quick_alret_view.dart';
 import 'package:gac_dashboard/core/helper_functions/extentions.dart';
 import 'package:gac_dashboard/core/helper_functions/get_user_data.dart';
 import 'package:gac_dashboard/core/helper_functions/routes.dart';
 import 'package:gac_dashboard/core/utils/app_colors.dart';
 import 'package:gac_dashboard/core/utils/app_text_styles.dart';
 import 'package:gac_dashboard/core/utils/spacing.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -23,8 +24,6 @@ class CustomDrawer extends StatelessWidget {
               return Column(
                 children: [
                   verticalSpace(100),
-                  
-                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -40,12 +39,19 @@ class CustomDrawer extends StatelessWidget {
                     ],
                   ),
                   const Text('مسؤول محافظة ', style: TextStyles.semiBold16),
-                   Text(getUserData().location.toString(), style: TextStyles.bold16),
+                  Text(getUserData().location.toString(),
+                      style: TextStyles.bold16),
                   const Spacer(),
                   OutlinedButton(
                     onPressed: () {
-                     context.read<ProductsCubit>().signOut();
-                     context.pushNamed(Routes.loginView);
+                      customQuickAlertView(context,
+                          text: ' هل تريد تسجيل الخروج ؟',
+                          title: 'تسجيل الخروج',
+                          confirmBtnText: 'نعم',
+                          type: QuickAlertType.confirm, onConfirmBtnTap: () {
+                        context.read<ProductsCubit>().signOut();
+                        context.pushNamed(Routes.loginView);
+                      });
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

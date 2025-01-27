@@ -1,4 +1,4 @@
-package com.example.gac_dashboard
+package com.ArabianGulf.gac_dashboard
 
 import io.flutter.embedding.android.FlutterActivity
 

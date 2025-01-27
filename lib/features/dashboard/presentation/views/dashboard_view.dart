@@ -20,6 +20,7 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
+  
     return BlocProvider(
       create: (context) =>
           ProductsCubit(getIt.get<ProductsRepo>(),getIt.get<AuthRepo>())..getProducts(),

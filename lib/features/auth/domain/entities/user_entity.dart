@@ -6,10 +6,12 @@ class UserEntity {
   String? phoneNumber;
   String? location;
   String? uId;
+  bool? hasAccess;
 
   UserEntity({
     required this.name,
     required this.email,
+    required this.hasAccess,
     required this.uId,
     required this.phoneNumber,
     required this.location
@@ -28,7 +30,8 @@ class UserEntity {
       'name': name,
       'uId': uId,
       'phoneNumber': phoneNumber,
-      'location': location
+      'location': location,
+      'hasAccess': hasAccess
     };
   }
 }

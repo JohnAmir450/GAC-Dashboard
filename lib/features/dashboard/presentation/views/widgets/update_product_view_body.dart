@@ -27,9 +27,7 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
 
   @override
   void initState() {
-    // context
-    //     .read<ProductUpdatesCubit>()
-    //     .getProductId(field: 'code', value: widget.product.code);
+   
     context
         .read<ProductUpdatesCubit>()
         .getProduct(code:  widget.product.code);

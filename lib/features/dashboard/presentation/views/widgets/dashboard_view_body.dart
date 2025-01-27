@@ -37,11 +37,14 @@ class DashboardViewBody extends StatelessWidget {
               verticalSpace(16),
               Padding(
                 padding: const EdgeInsets.only(top: 30.0),
-                child: CustomButton(height: 70,
-                    text: ' اضافة منتج',
-                    onPressed: () {
-                      context.pushNamed(Routes.addProductView);
-                    }),
+                child: Visibility(
+                  visible: getUserData().hasAccess ?? false,
+                  child: CustomButton(height: 70,
+                      text: ' اضافة منتج',
+                      onPressed: () {
+                        context.pushNamed(Routes.addProductView);
+                      }),
+                ),
               ),
               verticalSpace(16),
               CustomButton(height: 70,

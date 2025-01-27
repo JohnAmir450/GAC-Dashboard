@@ -7,7 +7,9 @@ class UserModel extends UserEntity {
       required super.name,
       required super.uId,
       required super.phoneNumber,
-      required super.location});
+      required super.location,
+      required super.hasAccess
+      });
   factory UserModel.fromFirebase(User user) {
     return UserModel(
       email: user.email ?? '',
@@ -15,6 +17,7 @@ class UserModel extends UserEntity {
       uId: user.uid,
       phoneNumber: user.phoneNumber ?? '',
       location: '',
+      hasAccess: false,
     );
   }
 
@@ -25,6 +28,7 @@ class UserModel extends UserEntity {
       uId: json['uId'],
       phoneNumber: json['phoneNumber'],
       location: json['location'],
+      hasAccess: json['hasAccess'],
     );
   }
 }

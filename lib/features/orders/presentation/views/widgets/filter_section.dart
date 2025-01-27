@@ -89,7 +89,7 @@ class _FilterSectionState extends State<FilterSection> {
 
               // Fetch filtered orders based on the selected status
               context.read<OrdersCubit>().getOrder(whereConditions: [
-                {
+               if (getUserData().hasAccess==false)  {
                   'field': 'shippingAddressModel.customerGovernment',
                   'isEqualTo': getUserData().location
                 },

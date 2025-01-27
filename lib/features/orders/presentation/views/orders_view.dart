@@ -25,7 +25,7 @@ class OrdersView extends StatelessWidget {
       body: BlocProvider(
         create: (context) => OrdersCubit(getIt.get<OrdersRepo>())
           ..getOrder(whereConditions: [
-            {
+          if (getUserData().hasAccess==false) {
               'field': 'shippingAddressModel.customerGovernment',
               'isEqualTo': getUserData().location
             }

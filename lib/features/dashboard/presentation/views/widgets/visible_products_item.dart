@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gac_dashboard/core/helper_functions/extentions.dart';
+import 'package:gac_dashboard/core/helper_functions/get_user_data.dart';
 import 'package:gac_dashboard/core/helper_functions/routes.dart';
 import 'package:gac_dashboard/core/utils/app_colors.dart';
 import 'package:gac_dashboard/core/utils/app_text_styles.dart';
@@ -18,7 +19,9 @@ class VisibleProductsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.pushNamed(Routes.updateProductView, arguments: productEntity);
+       if (getUserData().hasAccess == true) {
+          context.pushNamed(Routes.updateProductView, arguments: productEntity);
+       }
       },
       child: Container(
           decoration: BoxDecoration(
