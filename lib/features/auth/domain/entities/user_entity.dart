@@ -1,22 +1,34 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserEntity {
-   String? name;
-   String? email;
-   String? uId;
+  String? name;
+  String? email;
+  String? phoneNumber;
+  String? location;
+  String? uId;
 
-  UserEntity({required this.name, required this.email, required this.uId});
+  UserEntity({
+    required this.name,
+    required this.email,
+    required this.uId,
+    required this.phoneNumber,
+    required this.location
+  });
 
- UserEntity.fromFirebase(User user){
+  UserEntity.fromFirebase(User user) {
     email = user.email!;
     name = user.displayName!;
     uId = user.uid;
+    phoneNumber = user.phoneNumber!;
+    location = '';
   }
   toMap() {
     return {
       'email': email,
       'name': name,
       'uId': uId,
+      'phoneNumber': phoneNumber,
+      'location': location
     };
   }
 }

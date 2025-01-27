@@ -10,10 +10,15 @@ class OrdersCubit extends Cubit<OrdersState> {
   final OrdersRepo ordersRepo;
   OrdersCubit(this.ordersRepo) : super(OrdersInitialState());
 
-  Future<void> getOrder({Map<String, dynamic>? query}) async {
+  Future<void> getOrder(
+      {Map<String, dynamic>? query,
+      List<Map<String, dynamic>>? whereConditions}) async {
     emit(GetOrdersLoadingState());
 
-    var result = await ordersRepo.getOrders(query: query);
+    var result = await ordersRepo.getOrders(
+        query: query,
+        whereConditions: whereConditions
+       );
 
     result.fold((failure) {
       emit(GetOrdersFailureState(errorMessage: failure.message));
@@ -28,18 +33,18 @@ class OrdersCubit extends Cubit<OrdersState> {
   }
 
   Future<void> deleteOrder({required String orderId}) async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(days: 2));
 
     await ordersRepo.deleteOrder(orderId: orderId);
   }
 
-  Future<void> updateProductQuantityIfCancelled(
-      {required String orderId,
-      required List<CheckoutProductDetails> products,
-     }) async {
+  Future<void> updateProductQuantityIfCancelled({
+    required String orderId,
+    required List<CheckoutProductDetails> products,
+  }) async {
     await ordersRepo.updateProductQuantityIfCancelled(
-        orderId: orderId,
-        products: products,
-        );
+      orderId: orderId,
+      products: products,
+    );
   }
 }

@@ -30,55 +30,55 @@ class FireStoreService extends DatabaseService {
     return false;
   }
 
-   @override
+@override
 Future<dynamic> getData({
   required String path,
   String? documentId,
   Map<String, dynamic>? query,
-  String? filterValueEqualTo,
-  String? filterValue, // Add this optional parameter for user-specific queries
+  List<Map<String, dynamic>>? whereConditions, // New parameter for multiple filters
 }) async {
   try {
-    // If documentId is provided, fetch the document by its ID
     if (documentId != null) {
       var data = await fireStore.collection(path).doc(documentId).get();
       return data.data();
     } else {
-      // Query the collection
       Query<Map<String, dynamic>> data = fireStore.collection(path);
 
-      // If userId is provided, filter the query by userId (only for orders)
-      if (filterValueEqualTo != null &&filterValue != null) {
-        data = data.where(filterValue, isEqualTo: filterValueEqualTo);
+      // Apply multiple where conditions
+      if (whereConditions != null) {
+        for (var condition in whereConditions) {
+          data = data.where(
+            condition['field'],
+            isEqualTo: condition['isEqualTo'],
+            isLessThan: condition['isLessThan'],
+            isGreaterThan: condition['isGreaterThan'],
+            isLessThanOrEqualTo: condition['isLessThanOrEqualTo'],
+            isGreaterThanOrEqualTo: condition['isGreaterThanOrEqualTo'],
+          );
+        }
       }
 
-      // Apply additional query filters if provided
+      // Apply additional query filters
       if (query != null) {
         if (query['orderBy'] != null) {
-          var orderByField = query['orderBy'];
-          var descending = query['descending']??false;
-           
-          data = data.orderBy(orderByField, descending: descending);
+          data = data.orderBy(
+            query['orderBy'],
+            descending: query['descending'] ?? false,
+          );
         }
         if (query['limit'] != null) {
-          var limit = query['limit'];
-          data = data.limit(limit);
-        }
-        if (query['where'] != null && query['isEqualTo'] != null) {
-          data = data.where(query['where'], isEqualTo: query['isEqualTo']);
+          data = data.limit(query['limit']);
         }
       }
 
-      // Fetch the data from Firestore
       var result = await data.get();
-
-      // Return the fetched data
       return result.docs.map((e) => e.data()).toList();
     }
   } catch (e) {
     throw CustomException(message: 'Failed to fetch data: ${e.toString()}');
   }
 }
+
  
   
    @override

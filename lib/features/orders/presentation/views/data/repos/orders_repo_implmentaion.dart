@@ -15,11 +15,12 @@ class OrdersRepoImpl implements OrdersRepo {
   @override
   Future<Either<Failure, List<OrderEntity>>> getOrders(
       {Map<String, dynamic>? query,
-      String? filterValue,
-      String? filterValueEqualTo}) async {
+
+     List<Map<String, dynamic>>? whereConditions
+     }) async {
     try {
       List<Map<String, dynamic>> ordersData = await databaseService.getData(
-          path: BackendEndpoints.orders, query: query);
+          path: BackendEndpoints.orders, query: query,whereConditions: whereConditions);
       List<OrderEntity> orders =
           ordersData.map((e) => OrderModel.fromJson(e).toEntity()).toList();
       return Right(orders);

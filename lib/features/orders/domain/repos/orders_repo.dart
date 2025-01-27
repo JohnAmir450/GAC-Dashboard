@@ -6,6 +6,7 @@ import 'package:gac_dashboard/features/orders/domain/entities/order_entity.dart'
 abstract class OrdersRepo {
   Future<Either<Failure, List<OrderEntity>>> getOrders({
     Map<String, dynamic>? query,
+    List<Map<String, dynamic>>? whereConditions,
   });
   Future<Either<Failure, void>> updateOrderStatus(
       {required String orderId, required String status});

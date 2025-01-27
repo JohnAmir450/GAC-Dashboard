@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gac_dashboard/core/helper_functions/extentions.dart';
+import 'package:gac_dashboard/core/helper_functions/get_user_data.dart';
 import 'package:gac_dashboard/core/services/get_it_service.dart';
 import 'package:gac_dashboard/core/utils/custom_app_bar.dart';
 import 'package:gac_dashboard/features/orders/domain/repos/orders_repo.dart';
@@ -23,8 +24,12 @@ class OrdersView extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (context) => OrdersCubit(getIt.get<OrdersRepo>())
-          ..getOrder(query: {
-            
+          ..getOrder(whereConditions: [
+            {
+              'field': 'shippingAddressModel.customerGovernment',
+              'isEqualTo': getUserData().location
+            }
+          ], query: {
             'orderBy': 'orderDate',
             'descending': true,
           }),

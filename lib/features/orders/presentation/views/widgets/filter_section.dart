@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gac_dashboard/core/helper_functions/get_user_data.dart';
 import 'package:gac_dashboard/core/utils/app_text_styles.dart';
 import 'package:gac_dashboard/core/utils/spacing.dart';
 import 'package:gac_dashboard/features/orders/presentation/manager/orders_cubit/orders_cubit.dart';
@@ -87,9 +88,13 @@ class _FilterSectionState extends State<FilterSection> {
               });
 
               // Fetch filtered orders based on the selected status
-              context.read<OrdersCubit>().getOrder(query: {
-                if (value != 'الكل') 'where': 'orderStatus',
-                if (value != 'الكل') 'isEqualTo': value,
+              context.read<OrdersCubit>().getOrder(whereConditions: [
+                {
+                  'field': 'shippingAddressModel.customerGovernment',
+                  'isEqualTo': getUserData().location
+                },
+                {'field': 'orderStatus', 'isEqualTo':value == 'الكل' ? null : value},
+              ], query: {
                 'orderBy': 'orderDate',
                 'descending': true,
               });

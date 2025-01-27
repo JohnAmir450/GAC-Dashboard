@@ -7,15 +7,15 @@ abstract class DatabaseService {
     required String path,
     String? documentId,
     Map<String, dynamic>? query,
-    String? filterValueEqualTo,
-    String? filterValue,
+    
+     List<Map<String, dynamic>>? whereConditions,
   });
 
   Future<bool> checkIfDataExists(
       {required String path, required String documentId});
 
   Stream<List<Map<String, dynamic>>> getDataStream(
-      {required String path, String? documentId, Map<String, dynamic>? query});
+      {required String path, String? documentId, Map<String, dynamic>? query,});
 
   Future<void> updateProduct(
       {required String path,

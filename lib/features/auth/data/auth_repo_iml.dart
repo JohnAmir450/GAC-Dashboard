@@ -5,7 +5,6 @@ import 'package:gac_dashboard/core/errors/custom_exceptions.dart';
 import 'package:gac_dashboard/core/errors/failures.dart';
 import 'package:gac_dashboard/core/helper_functions/cache_helper.dart';
 import 'package:gac_dashboard/core/services/firebase_auth_service.dart';
-import 'package:gac_dashboard/core/utils/backend_endpoints.dart';
 import 'package:gac_dashboard/core/utils/cache_helper_keys.dart';
 import 'package:gac_dashboard/features/auth/data/models/user_model.dart';
 import 'package:gac_dashboard/features/auth/domain/entities/user_entity.dart';
@@ -13,7 +12,7 @@ import 'package:gac_dashboard/features/auth/domain/repos/auth_repo.dart';
 
 import '../../../core/services/database_service.dart';
 
-class AuthRepoImpl extends AuthRepo {
+class AuthRepoImpl implements AuthRepo {
   final FirebaseAuthService firebaseAuthService;
   final DatabaseService databaseService;
 
@@ -38,7 +37,7 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future<UserEntity> getUserData({required String uId}) async {
     var userData = await databaseService.getData(
-        path: BackendEndpoints.getUserData, documentId: uId);
+        path: 'admins', documentId: uId);
     return UserModel.fromJson(userData);
   }
 
@@ -57,6 +56,16 @@ class AuthRepoImpl extends AuthRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, void>> signOut() async{
+    try {
+      await firebaseAuthService.signOut();
+      return right(null);
+    } catch (e) {
+      return left(ServerFailure(message: 'حدث خطاء اثناء تسجيل الخروج'));
     }
   }
 }
