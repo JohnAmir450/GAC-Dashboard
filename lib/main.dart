@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
             ],
             supportedLocales: S.delegate.supportedLocales,
             locale: const Locale('ar'),
-            title: 'GAC Dashboard',
+            title: 'لوحة تحكم - العربية الخليجية',
             theme: ThemeData(
               fontFamily: 'Cairo',
               colorScheme:

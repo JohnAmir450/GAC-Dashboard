@@ -19,6 +19,7 @@ OrderEntity getDummyOrder() {
   // Create a sample list of order products
   List<CheckoutProductDetails> orderProducts = [
     CheckoutProductDetails(
+ productPrice: 200,
       productName: 'Product A',
       productCode: 'A123',
       productImageUrl: 'https://img.freepik.com/free-photo/cola-pouring-glass_155003-3248.jpg?t=st=1737721021~exp=1737724621~hmac=44c945478e6a90150f735b346cfbc50cbe03f6c7eb964a6c40a95c9cc9a3e8ca&w=740',
@@ -26,6 +27,7 @@ OrderEntity getDummyOrder() {
      
     ),
     CheckoutProductDetails(
+       productPrice: 200,
       productName: 'Product A',
       productCode: 'A123',
       productImageUrl: 'https://img.freepik.com/free-photo/cola-pouring-glass_155003-3248.jpg?t=st=1737721021~exp=1737724621~hmac=44c945478e6a90150f735b346cfbc50cbe03f6c7eb964a6c40a95c9cc9a3e8ca&w=740',
@@ -34,6 +36,7 @@ OrderEntity getDummyOrder() {
     ),
    CheckoutProductDetails(
       productName: 'Product A',
+      productPrice: 200,
       productCode: 'A123',
       productImageUrl: 'https://img.freepik.com/free-photo/cola-pouring-glass_155003-3248.jpg?t=st=1737721021~exp=1737724621~hmac=44c945478e6a90150f735b346cfbc50cbe03f6c7eb964a6c40a95c9cc9a3e8ca&w=740',
       productQuantity: 2,

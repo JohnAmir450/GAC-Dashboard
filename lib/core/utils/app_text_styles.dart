@@ -69,4 +69,9 @@ abstract class TextStyles {
     fontWeight: FontWeight.normal,
     fontSize: 11,
   );
+
+    static const TextStyle regular14 = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 14,
+  );
 }

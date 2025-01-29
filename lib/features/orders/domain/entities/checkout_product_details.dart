@@ -4,12 +4,14 @@ class CheckoutProductDetails {
   final String productName;
   final String productImageUrl;
   final int productQuantity;
+  final double productPrice;
 
   CheckoutProductDetails({
     required this.productCode,
     required this.productQuantity,
     required this.productName,
     required this.productImageUrl,
+    required this.productPrice,
   });
   
  
@@ -19,6 +21,7 @@ class CheckoutProductDetails {
       productName: json['name'],
       productImageUrl: json['imageUrl'],
       productQuantity: json['quantity'],
+      productPrice: json['productPrice'],
     );
   }
   toJson() {
@@ -27,6 +30,7 @@ class CheckoutProductDetails {
       'quantity': productQuantity,
       'name': productName,
       'imageUrl': productImageUrl,
+      'productPrice': productPrice
     };
   }
 
