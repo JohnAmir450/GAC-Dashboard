@@ -29,7 +29,9 @@ class OrdersCubit extends Cubit<OrdersState> {
 
   Future<void> updateProductStatus(
       {required String orderId, required String status}) async {
+        
     await ordersRepo.updateOrderStatus(orderId: orderId, status: status);
+
   }
 
   Future<void> deleteOrder({required String orderId}) async {
@@ -46,5 +48,10 @@ class OrdersCubit extends Cubit<OrdersState> {
       orderId: orderId,
       products: products,
     );
+    await ordersRepo.updateProductSellingCountIfCancelled(
+      orderId: orderId,
+    );
   }
+
+
 }

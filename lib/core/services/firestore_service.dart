@@ -112,14 +112,28 @@ Future<dynamic> getData({
     }
   }
   
-  @override
-  Future<void> updateProduct({required String path,required String documentId,  Map<String, dynamic>? data}) async {
-    try {
-  await fireStore.collection(path).doc(documentId).update(data!);
-}  catch (e) {
-  throw CustomException(message: e.toString());
-}
+@override
+Future<void> updateProduct({
+  required String path,
+  String? documentId,  // Make documentId optional (nullable)
+  Map<String, dynamic>? data,
+}) async {
+  try {
+    if (documentId == null) {
+      // If documentId is null, update all documents in the collection
+      var collection = await fireStore.collection(path).get();
+      for (var doc in collection.docs) {
+        await fireStore.collection(path).doc(doc.id).update(data!);
+      }
+    } else {
+      // If documentId is provided, update the specific document
+      await fireStore.collection(path).doc(documentId).update(data!);
+    }
+  } catch (e) {
+    throw CustomException(message: e.toString());
   }
+}
+
 
   @override
   Future<List<String>> getDocumentIdsByField({

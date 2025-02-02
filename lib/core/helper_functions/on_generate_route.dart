@@ -12,6 +12,7 @@ import 'package:gac_dashboard/features/dashboard/presentation/views/dashboard_vi
 import 'package:gac_dashboard/features/orders/presentation/views/orders_view.dart';
 import 'package:gac_dashboard/features/dashboard/presentation/views/update_product_view.dart';
 
+
 Route onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
     case Routes.loginView:

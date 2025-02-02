@@ -39,7 +39,6 @@ class AddProductViewBody extends StatelessWidget {
                 cubit.isOrganic = value;
               }),
               verticalSpace(30),
-             
               CustomButton(
                   text: 'اضافة المنتج',
                   onPressed: () {
@@ -61,6 +60,7 @@ class AddProductViewBody extends StatelessWidget {
 
   ProductEntity productData(AddProductCubit cubit) {
     ProductEntity input = ProductEntity(
+        salesCount: 0,
         fileImage: cubit.productImage,
         numberOfCalories: cubit.numberOfCalories?.toInt() ?? 0,
         expirationMonths: cubit.expirationMonths?.toInt() ?? 12,

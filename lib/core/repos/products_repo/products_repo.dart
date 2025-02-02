@@ -12,4 +12,6 @@ Future<Either<Failure,void>> updateProduct({required String documentId, required
 Future<Either<Failure,void>> deleteProduct({required String documentId});
 
 Future<Either<Failure,String>> getProduct({required String code}); 
+
+ 
 }

@@ -49,6 +49,10 @@ class VisibleProductsItem extends StatelessWidget {
                     Text(
                         'الكمية المتاحة : ${productEntity.productQuantity} كرتونة',
                         style: TextStyles.semiBold16),
+                        Text('اجمالي البيع : ${productEntity.salesCount} كرتونة',
+                        style: TextStyles.semiBold16
+                            .copyWith(color: AppColors.primaryColor)
+                        )
                   ],
                 ),
               )

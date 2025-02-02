@@ -18,8 +18,10 @@ class ProductEntity {
    num ratingCount=0;
   final List<ReviewEntity>reviews;
   final String? category;
+   int? salesCount;
 
-  ProductEntity({
+  ProductEntity( {
+     this.salesCount,
     required this.numberOfCalories,
     required this.expirationMonths,
     required this.isOrganic,

@@ -16,4 +16,11 @@ abstract class OrdersRepo {
       {required String orderId,
       required List<CheckoutProductDetails> products,
      });
+
+     Future<Either<Failure, void>> updateProductSellingCountIfCancelled({
+    required String orderId,
+     // Add the operator parameter
+  });
+
+ 
 }

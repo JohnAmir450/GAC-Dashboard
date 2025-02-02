@@ -31,7 +31,6 @@ class DashboardViewBody extends StatelessWidget {
                 style: TextStyles.regular16.copyWith(
                   color: const Color(0xff949D9E),
                 ),
-                
               ),
               Text(getUserData().name!, style: TextStyles.bold16),
               verticalSpace(16),
@@ -39,7 +38,8 @@ class DashboardViewBody extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 30.0),
                 child: Visibility(
                   visible: getUserData().hasAccess ?? false,
-                  child: CustomButton(height: 70,
+                  child: CustomButton(
+                      height: 70,
                       text: ' اضافة منتج',
                       onPressed: () {
                         context.pushNamed(Routes.addProductView);
@@ -47,7 +47,8 @@ class DashboardViewBody extends StatelessWidget {
                 ),
               ),
               verticalSpace(16),
-              CustomButton(height: 70,
+              CustomButton(
+                  height: 70,
                   text: '  الطلبات',
                   onPressed: () {
                     context.pushNamed(Routes.ordersView);
@@ -65,19 +66,26 @@ class DashboardViewBody extends StatelessWidget {
         ),
         BlocBuilder<ProductsCubit, ProductsState>(
           builder: (context, state) {
-            if(state is ProductsLoadingState){
+            if (state is ProductsLoadingState) {
               return SliverToBoxAdapter(
-                child: Center(child: LoadingAnimationWidget.inkDrop(color: AppColors.primaryColor, size: 32),),
+                child: Center(
+                  child: LoadingAnimationWidget.inkDrop(
+                      color: AppColors.primaryColor, size: 32),
+                ),
               );
-            }else if (state is ProductsSuccessState) {
-            return  VisibleProductsListView(products: state.products,);
-          } else if (state is ProductsFailureState) {
-            return SliverToBoxAdapter(
-              child: Center(child: Text(state.errorMessage)),
-            );
-          } else {
-            return const SliverToBoxAdapter(child: Center(child: Text('لا يوجد اي منتاجات معروضة حتى الان')));
-          }
+            } else if (state is ProductsSuccessState) {
+              return VisibleProductsListView(
+                products: state.products,
+              );
+            } else if (state is ProductsFailureState) {
+              return SliverToBoxAdapter(
+                child: Center(child: Text(state.errorMessage)),
+              );
+            } else {
+              return const SliverToBoxAdapter(
+                  child: Center(
+                      child: Text('لا يوجد اي منتاجات معروضة حتى الان')));
+            }
           },
         ),
       ]),

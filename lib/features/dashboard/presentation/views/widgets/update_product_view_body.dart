@@ -186,6 +186,7 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
   void updateProductDataFromCubit(ProductUpdatesCubit cubit) {
     cubit.updateProduct(
         productEntity: ProductEntity(
+          salesCount:widget.product.salesCount ,
             imageUrl: widget.product.imageUrl,
             category: cubit.selectedCategory ,
             fileImage: widget.product.fileImage,

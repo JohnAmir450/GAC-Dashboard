@@ -104,7 +104,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
     NotificationService().sendNotification(
       pushId: widget.orderEntity.notificationId,
       title: 'تم تحديث حالة الطلب رقم ${widget.orderEntity.orderId}',
-      body: 'يمكنك متابعة التحديثات من خلال صفحة الطلبات',
+      body: 'تم تحديث حالة الطلب الى $value, يمكنك متابعة حالة الطلبات من خلال التطبيق',
     );
   }
 }

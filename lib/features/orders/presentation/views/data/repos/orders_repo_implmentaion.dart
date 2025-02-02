@@ -6,6 +6,8 @@ import 'package:gac_dashboard/features/orders/domain/entities/order_entity.dart'
 import 'package:gac_dashboard/features/orders/domain/repos/orders_repo.dart';
 import 'package:gac_dashboard/features/orders/presentation/views/data/models/order_model.dart';
 
+
+
 import '../../../../domain/entities/checkout_product_details.dart';
 
 class OrdersRepoImpl implements OrdersRepo {
@@ -15,12 +17,12 @@ class OrdersRepoImpl implements OrdersRepo {
   @override
   Future<Either<Failure, List<OrderEntity>>> getOrders(
       {Map<String, dynamic>? query,
-
-     List<Map<String, dynamic>>? whereConditions
-     }) async {
+      List<Map<String, dynamic>>? whereConditions}) async {
     try {
       List<Map<String, dynamic>> ordersData = await databaseService.getData(
-          path: BackendEndpoints.orders, query: query,whereConditions: whereConditions);
+          path: BackendEndpoints.orders,
+          query: query,
+          whereConditions: whereConditions);
       List<OrderEntity> orders =
           ordersData.map((e) => OrderModel.fromJson(e).toEntity()).toList();
       return Right(orders);
@@ -54,6 +56,58 @@ class OrdersRepoImpl implements OrdersRepo {
     }
   }
 
+ @override
+  Future<Either<Failure, void>> updateProductSellingCountIfCancelled({
+    required String orderId,
+     // Add the operator parameter
+  }) async {
+    try {
+      // Fetch the order document
+      final orderData = await databaseService.getData(
+        path: BackendEndpoints.orders,
+        documentId: orderId,
+      );
+
+      if (orderData != null) {
+        // Extract the product details list from the order
+        final List<dynamic> productList =
+            orderData['checkoutProductDetailsList'] ?? [];
+
+        for (final product in productList) {
+          final String productCode = product['code'];
+          final int cancelledQuantity = product['quantity'] ?? 0;
+
+          // Skip if cancelledQuantity is zero or invalid
+          if (cancelledQuantity <= 0) continue;
+
+          // Fetch the product document from the 'products' collection
+          final productData = await databaseService.getData(
+            path: BackendEndpoints.products,
+            documentId: productCode,
+          );
+
+          if (productData != null) {
+            // Get the current quantity of the product
+            final int currentSellingCount = productData['sellingCount'] ?? 0;
+
+            int newPoints = currentSellingCount - cancelledQuantity;
+
+            await databaseService.updateProduct(
+              path: BackendEndpoints.products,
+              documentId: productCode,
+              data: {
+                'sellingCount': newPoints,
+              },
+            );
+          }
+        }
+      }
+
+      return const Right(null);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
   @override
   Future<Either<Failure, void>> updateProductQuantityIfCancelled({
     required String orderId,
@@ -106,4 +160,9 @@ class OrdersRepoImpl implements OrdersRepo {
       return Left(ServerFailure(message: e.toString()));
     }
   }
+
+
+
+
+
 }

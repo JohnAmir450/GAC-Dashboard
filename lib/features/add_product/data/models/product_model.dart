@@ -95,6 +95,7 @@ class ProductModel {
 
   ProductEntity toEntity(){
     return ProductEntity(
+      salesCount: sellingCount??0 ,
       name: name,    
       price: price,
       category: category,

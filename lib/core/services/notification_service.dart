@@ -28,12 +28,12 @@ class NotificationService {
   }));
 
   if(response.statusCode==200){
-     print('Notification sent successfully and response is ${response.body}'); 
+    
   }else{
-    print('Failed to send notification');
+    
   }
 } on Exception catch (e) {
-  print('Error sending notification: $e');
+  
 }
   
   }

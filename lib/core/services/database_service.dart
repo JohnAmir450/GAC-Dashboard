@@ -19,7 +19,7 @@ abstract class DatabaseService {
 
   Future<void> updateProduct(
       {required String path,
-      required String documentId,
+       String? documentId,
       Map<String, dynamic>? data});
   Future<void> deleteProduct(
       {required String path, required String documentId});
