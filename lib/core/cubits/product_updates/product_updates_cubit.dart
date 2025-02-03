@@ -14,7 +14,7 @@ class ProductUpdatesCubit extends Cubit<ProductUpdatesState> {
   final TextEditingController? productDescription = TextEditingController();
   num? productPrice, expirationMonths, productQuantity, numberOfCalories;
   var formKey = GlobalKey<FormState>();
-  bool isFeatured = false;
+  bool? isFeatured;
   late String productId;
   List<String> categories = [
     'شيف',

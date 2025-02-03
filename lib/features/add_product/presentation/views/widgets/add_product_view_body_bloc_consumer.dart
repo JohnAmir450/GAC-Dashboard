@@ -25,7 +25,7 @@ class AddProductViewBodyBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return  ModalProgressHUD(
           inAsyncCall: state is AddProductLoadingState,
-          child: AddProductViewBody());
+          child: const AddProductViewBody());
       },
     );
   }

@@ -63,7 +63,7 @@ class _ImageFieldState extends State<ImageField> {
               fileImage = null;
                widget.onChanged(fileImage);
             });
-          }, icon: CircleAvatar(child: Icon(Icons.close),)))
+          }, icon: const CircleAvatar(child: Icon(Icons.close),)))
         ],
       ),
     );

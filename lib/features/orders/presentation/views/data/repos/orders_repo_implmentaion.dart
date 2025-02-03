@@ -156,7 +156,7 @@ class OrdersRepoImpl implements OrdersRepo {
 
       return const Right(null);
     } catch (e) {
-      print('Error updating product quantity: $e');
+     
       return Left(ServerFailure(message: e.toString()));
     }
   }

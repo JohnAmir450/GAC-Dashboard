@@ -8,7 +8,7 @@ class ProductEntity {
   final String description;
   final String code;
   File? fileImage;
-  final bool isFeatured;
+   bool isFeatured;
   String? imageUrl;
   final int expirationMonths;
    bool isOrganic=true;

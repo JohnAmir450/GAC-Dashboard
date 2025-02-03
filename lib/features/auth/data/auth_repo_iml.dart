@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gac_dashboard/core/errors/custom_exceptions.dart';
 import 'package:gac_dashboard/core/errors/failures.dart';
 import 'package:gac_dashboard/core/helper_functions/cache_helper.dart';
@@ -27,8 +28,10 @@ class AuthRepoImpl implements AuthRepo {
       var userEntity = await getUserData(uId: user.uid);
       await saveUserData(user: userEntity);
       return Right(userEntity);
+    } on FirebaseAuthException catch (e) {
+      return Left(ServerFailure(message: mapException(e)));
     } on CustomException catch (e) {
-      return Left(ServerFailure(message: e.message));
+      return Left(ServerFailure(message: e.toString()));
     } catch (e) {
       return Left(ServerFailure(message: 'حدث خطأ ما، حاول مرة اخرى'));
     }
@@ -36,8 +39,8 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<UserEntity> getUserData({required String uId}) async {
-    var userData = await databaseService.getData(
-        path: 'admins', documentId: uId);
+    var userData =
+        await databaseService.getData(path: 'admins', documentId: uId);
     return UserModel.fromJson(userData);
   }
 
@@ -51,16 +54,15 @@ class AuthRepoImpl implements AuthRepo {
   Future<Either<Failure, void>> sendPasswordResetEmail(
       {required String email}) async {
     try {
-      
       await firebaseAuthService.sendEmailToResetPassword(email: email);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     }
   }
-  
+
   @override
-  Future<Either<Failure, void>> signOut() async{
+  Future<Either<Failure, void>> signOut() async {
     try {
       await firebaseAuthService.signOut();
       return right(null);

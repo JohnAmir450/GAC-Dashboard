@@ -12,7 +12,7 @@ final List<ProductEntity>products;
     return SliverToBoxAdapter(
       child: ListView.builder(
         itemBuilder: (context, index) =>  Padding(
-          padding: EdgeInsets.symmetric(vertical: 12.0),
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: VisibleProductsItem(productEntity: products[index],),
         ),
         itemCount: products.length,

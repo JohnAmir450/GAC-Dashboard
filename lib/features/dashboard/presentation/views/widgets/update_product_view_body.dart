@@ -65,7 +65,10 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
             verticalSpace(24),
             updateProductTextFields(cubit),
             verticalSpace(16),
-            IsFeaturedCheckBox(onChanged: (value) {
+            IsFeaturedCheckBox(
+              isAlreadyChecked: widget.product.isFeatured,
+              onChanged: (value) {
+             
               cubit.isFeatured = value;
               hasChanges = true;
             }),
@@ -202,7 +205,7 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
             description:
                 cubit.productDescription?.text ?? widget.product.description,
             code: cubit.productCode?.text ?? widget.product.code,
-            isFeatured: cubit.isFeatured,
+            isFeatured: cubit.isFeatured ?? widget.product.isFeatured,
             reviews: widget.product.reviews));
   }
 }
