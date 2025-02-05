@@ -142,7 +142,7 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
         verticalSpace(16),
         CustomTextFormField(
           hintText:
-              'عدد السعرات الحرارية : ${widget.product.numberOfCalories.toString()}',
+              ' سعر الخصم، ضعه بـ 0 إذا لا يوجد خصم: ${widget.product.discountPrice.roundToDouble().toString()}',
           onChanged: (value) {
             cubit.numberOfCalories = num.parse(value);
             hasChanges = true;
@@ -193,8 +193,8 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
             imageUrl: widget.product.imageUrl,
             category: cubit.selectedCategory ,
             fileImage: widget.product.fileImage,
-            numberOfCalories: cubit.numberOfCalories?.toInt() ??
-                widget.product.numberOfCalories,
+            discountPrice: cubit.numberOfCalories?.toInt() ??
+                widget.product.discountPrice,
             expirationMonths: cubit.expirationMonths?.toInt() ??
                 widget.product.expirationMonths,
             isOrganic: widget.product.isOrganic,

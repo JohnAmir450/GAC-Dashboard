@@ -62,7 +62,7 @@ class AddProductViewBody extends StatelessWidget {
     ProductEntity input = ProductEntity(
         salesCount: 0,
         fileImage: cubit.productImage,
-        numberOfCalories: cubit.numberOfCalories?.toInt() ?? 0,
+        discountPrice: cubit.discountPrice?.toDouble() ?? 0,
         expirationMonths: cubit.expirationMonths?.toInt() ?? 12,
         isOrganic: cubit.isOrganic,
         productQuantity: cubit.productQuantity?.toInt() ?? 0,

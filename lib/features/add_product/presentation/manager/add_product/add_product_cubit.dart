@@ -28,7 +28,7 @@ class AddProductCubit extends Cubit<AddProductState> {
   final TextEditingController productName = TextEditingController();
   final TextEditingController productCode = TextEditingController();
   final TextEditingController productDescription = TextEditingController();
-  num? productPrice, expirationMonths, productQuantity, numberOfCalories;
+  num? productPrice, expirationMonths, productQuantity, discountPrice;
   var formKey = GlobalKey<FormState>();
   bool isFeatured = false;
   bool isOrganic = true;

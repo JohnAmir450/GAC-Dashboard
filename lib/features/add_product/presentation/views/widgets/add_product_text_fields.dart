@@ -47,9 +47,9 @@ class AddProductTextFields extends StatelessWidget {
         ),
         verticalSpace(16),
         CustomTextFormField(
-          hintText: 'عدد السعرات الحرارية',
+          hintText: 'سعر الخصم، ضعه بـ 0 اذا لا يوجد خصم',
           onChanged: (value) {
-            cubit.numberOfCalories = num.parse(value);
+            cubit.discountPrice = num.parse(value);
           },
           textInputType: TextInputType.number,
         ),

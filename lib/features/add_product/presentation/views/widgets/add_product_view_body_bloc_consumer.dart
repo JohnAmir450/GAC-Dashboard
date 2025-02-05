@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gac_dashboard/core/helper_functions/custom_snak_bar.dart';
+import 'package:gac_dashboard/core/helper_functions/extentions.dart';
 import 'package:gac_dashboard/features/add_product/presentation/views/widgets/add_product_view_body.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -17,6 +18,7 @@ class AddProductViewBodyBlocConsumer extends StatelessWidget {
       listener: (context, state) {
         if(state is AddProductSuccessState){
           showSnackBar(context, text: 'تم اضافة المنتج بنجاح', color: Colors.green);
+          context.pop();
         }
         if (state is AddProductFailureState) {
           showSnackBar(context, text: state.errorMessage, color: Colors.red);
