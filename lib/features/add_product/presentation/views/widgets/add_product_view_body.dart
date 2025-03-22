@@ -72,6 +72,7 @@ class AddProductViewBody extends StatelessWidget {
         code: cubit.productCode.text,
         isFeatured: cubit.isFeatured,
         category: cubit.selectedCategory ?? 'الفئة',
+        productType: cubit.selectedProductType ?? 'النوع',
         reviews: []);
     return input;
   }

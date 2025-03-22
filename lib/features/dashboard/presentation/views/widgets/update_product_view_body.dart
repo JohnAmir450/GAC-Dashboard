@@ -9,6 +9,7 @@ import 'package:gac_dashboard/core/utils/app_colors.dart';
 import 'package:gac_dashboard/core/utils/spacing.dart';
 import 'package:gac_dashboard/core/widgets/custom_button.dart';
 import 'package:gac_dashboard/core/widgets/custom_drop_down_form_field.dart';
+import 'package:gac_dashboard/core/widgets/custom_product_type_drop_down_button.dart';
 import 'package:gac_dashboard/core/widgets/custom_text_field.dart';
 import 'package:gac_dashboard/features/add_product/domain/entities/product_entity.dart';
 import 'package:gac_dashboard/features/add_product/presentation/views/widgets/is_featured_check_box.dart';
@@ -27,16 +28,15 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
 
   @override
   void initState() {
-   
-    context
-        .read<ProductUpdatesCubit>()
-        .getProduct(code:  widget.product.code);
+    context.read<ProductUpdatesCubit>().getProduct(code: widget.product.code);
     context.read<ProductUpdatesCubit>().productName?.text = widget.product.name;
     context.read<ProductUpdatesCubit>().productCode?.text = widget.product.code;
     context.read<ProductUpdatesCubit>().productDescription?.text =
         widget.product.description;
     context.read<ProductUpdatesCubit>().selectedCategory =
         widget.product.category;
+         context.read<ProductUpdatesCubit>().selectedProductType =
+        widget.product.productType;
     super.initState();
   }
 
@@ -66,12 +66,11 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
             updateProductTextFields(cubit),
             verticalSpace(16),
             IsFeaturedCheckBox(
-              isAlreadyChecked: widget.product.isFeatured,
-              onChanged: (value) {
-             
-              cubit.isFeatured = value;
-              hasChanges = true;
-            }),
+                isAlreadyChecked: widget.product.isFeatured,
+                onChanged: (value) {
+                  cubit.isFeatured = value;
+                  hasChanges = true;
+                }),
             verticalSpace(24),
             CustomButton(
               text: 'تحديث المنتج',
@@ -161,7 +160,7 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
         ),
         verticalSpace(16),
         CustomCategoryDropDownButtonFormField(
-          value: cubit.selectedCategory ,
+          value: cubit.selectedCategory,
           items: cubit.categories.map((category) {
             return DropdownMenuItem<String>(
               value: category,
@@ -170,7 +169,24 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
           }).toList(),
           onChanged: (value) {
             cubit.selectedCategory = value;
+             hasChanges = true;
           },
+        ),
+        verticalSpace(16),
+         CustomProductTypeDropDownButtonFormField(
+        value: cubit.selectedProductType,
+        items: cubit.productTypes.map((productType) {
+          return DropdownMenuItem<String>(
+            value: productType,
+            child: FittedBox(child: Text(productType)),
+          );
+        }).toList(
+        ),
+        onChanged: (value) {
+          cubit.selectedProductType = value;
+           hasChanges = true;
+        },
+        
         ),
         verticalSpace(16),
         CustomTextFormField(
@@ -189,12 +205,13 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
   void updateProductDataFromCubit(ProductUpdatesCubit cubit) {
     cubit.updateProduct(
         productEntity: ProductEntity(
-          salesCount:widget.product.salesCount ,
+            salesCount: widget.product.salesCount,
             imageUrl: widget.product.imageUrl,
-            category: cubit.selectedCategory ,
+            productType: cubit.selectedProductType,
+            category: cubit.selectedCategory,
             fileImage: widget.product.fileImage,
-            discountPrice: cubit.numberOfCalories?.toInt() ??
-                widget.product.discountPrice,
+            discountPrice:
+                cubit.numberOfCalories?.toInt() ?? widget.product.discountPrice,
             expirationMonths: cubit.expirationMonths?.toInt() ??
                 widget.product.expirationMonths,
             isOrganic: widget.product.isOrganic,
@@ -209,4 +226,3 @@ class _UpdateProductViewBodyState extends State<UpdateProductViewBody> {
             reviews: widget.product.reviews));
   }
 }
-

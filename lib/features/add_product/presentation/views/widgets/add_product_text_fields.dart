@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gac_dashboard/core/utils/spacing.dart';
 import 'package:gac_dashboard/core/widgets/custom_drop_down_form_field.dart';
+import 'package:gac_dashboard/core/widgets/custom_product_type_drop_down_button.dart';
 import 'package:gac_dashboard/core/widgets/custom_text_field.dart';
 import 'package:gac_dashboard/features/add_product/presentation/manager/add_product/add_product_cubit.dart';
 
@@ -74,6 +75,21 @@ class AddProductTextFields extends StatelessWidget {
                   cubit.selectedCategory = value;
                 },
               ),
+        verticalSpace(16),
+        CustomProductTypeDropDownButtonFormField(
+        value: cubit.selectedProductType,
+        items: cubit.productTypes.map((productType) {
+          return DropdownMenuItem<String>(
+            value: productType,
+            child: FittedBox(child: Text(productType)),
+          );
+        }).toList(
+        ),
+        onChanged: (value) {
+          cubit.selectedProductType = value;
+        },
+        
+        ),
         verticalSpace(16),
         CustomTextFormField(
           hintText: 'وصف المنتج',

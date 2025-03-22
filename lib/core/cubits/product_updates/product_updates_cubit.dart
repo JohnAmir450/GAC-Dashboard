@@ -25,7 +25,12 @@ class ProductUpdatesCubit extends Cubit<ProductUpdatesState> {
     'الدوار',
   ]; // Example category list
   String? selectedCategory;
-
+  String? selectedProductType;
+   List<String>productTypes=[
+    'زيوت',
+    'صناعي',
+    'سمن'
+  ];
   Future<void> getProduct({required String code}) async {
     emit(GetProductIdLoadingState());
     final result = await productsRepo.getProduct(code: code);

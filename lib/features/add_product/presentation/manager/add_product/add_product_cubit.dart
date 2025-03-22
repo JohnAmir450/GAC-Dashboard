@@ -21,7 +21,12 @@ class AddProductCubit extends Cubit<AddProductState> {
     'الدوار',
   ]; // Example category list
   String? selectedCategory;
-
+  List<String>productTypes=[
+    'زيوت',
+    'صناعي',
+    'سمن'
+  ];
+String? selectedProductType;
   AddProductCubit(this.imagesRepo, this.productsRepo)
       : super(AddProductInitialState());
 

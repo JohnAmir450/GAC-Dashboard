@@ -6,6 +6,7 @@ class ProductModel {
   final String name;
   final num price;
   final String description;
+  String? productType;
   final String code;
   File? fileImage;
   final bool isFeatured;
@@ -34,6 +35,7 @@ class ProductModel {
     required this.isFeatured,
     this.imageUrl,
     required this.reviews,
+    required this.productType,
     this.sellingCount=0
   });
 
@@ -42,6 +44,7 @@ class ProductModel {
       category: addProductEntity.category,
       name: addProductEntity.name,    
       price: addProductEntity.price,
+      productType: addProductEntity.productType,
       description: addProductEntity.description,
       code: addProductEntity.code,
       fileImage: addProductEntity.fileImage,  
@@ -58,6 +61,7 @@ class ProductModel {
     return ProductModel(
       name: json['name'],
       price: json['price'],
+      productType: json['productType'],
       description: json['description'],
       category: json['category'],
       code: json['code'],
@@ -79,6 +83,7 @@ class ProductModel {
       'name': name,
       'price': price,
       'category': category,
+      'productType': productType,
       'description': description,
       'code': code,
       'fileImage': fileImage!.path,
@@ -100,6 +105,7 @@ class ProductModel {
       price: price,
       category: category,
       description: description,
+      productType: productType,
       code: code,
       fileImage: fileImage,  
       isFeatured: isFeatured,

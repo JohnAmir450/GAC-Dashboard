@@ -24,7 +24,7 @@ class LoginView extends StatelessWidget {
         body: BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccessState) {
-              context.pushReplacementNamed(Routes.dashboardView);
+              context.pushNamedAndRemoveUntil(Routes.dashboardView,predicate: (route) => false);
             }
             if (state is LoginFailureState) {
               showSnackBar(context, text: state.errMessage, color: Colors.red);
